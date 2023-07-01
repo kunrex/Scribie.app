@@ -1,0 +1,21 @@
+.expand {
+    width: 100%;
+}
+
+.close-button {
+    font-size: 15px;
+}
+
+.subtitle {
+    margin-bottom: 20px;
+}
+
+.bold-text, .subtitle {
+    font-weight: bold;
+}
+
+ion-card-title {
+    font-weight: bold;
+
+    --color: var(--ion-color-primary);
+}

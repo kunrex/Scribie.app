@@ -1,0 +1,152 @@
+.container {
+    padding: 0;
+    height: 100%;
+
+    display: flex;
+    flex-flow: column;
+}
+
+.flex-display, ion-fab, .fab-btn-container {
+    display: flex;
+    justify-content: center;   
+}
+
+.flex-display {
+    height: 100%;
+    align-items: center;
+}
+
+.expand {
+    width: 100%;
+}
+
+ion-fab {
+    width: 100;
+    flex-direction: row;
+}
+
+.absolute-center {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.container .container-header {
+    margin-top: 40px;
+    flex: 0 1 auto;
+}
+
+.logo {
+    width: 30vw;
+    height: auto;
+}
+
+.search-container {
+    padding: 10px;
+}
+
+.search-icon {
+    margin-top: 6px;
+    margin-left: 10px;
+
+    color: gray;
+}
+
+.container .container-body {
+    flex: 1 1 auto;
+    
+    margin: 10px;
+    margin-top: 0px;
+}
+
+.card {
+    height: 100%;
+}
+
+.empty-text {
+    font-size: 20px;
+    font-style: normal;
+}
+
+.scroll {
+    height: 60vh;
+    overflow-y: auto;
+
+    padding: 0;
+    list-style: none;
+}
+
+.card-body {
+    padding: 0;
+    padding-top: 5px;
+}
+
+.recording-item {
+    padding: 7px;
+    padding-left: 3px;
+    padding-right: 3px;
+
+    border-bottom-width: thin;
+    border-bottom-style: solid;
+    border-image: linear-gradient(to right, transparent, gray, transparent) 5; 
+}
+
+li:last-child .recording-item {
+    border: none;
+    border-image: none;
+}
+
+.recording-icon-container {
+    padding-top: 3px
+}
+
+.recording-icon{
+    font-size: 68px;
+}
+
+.recording-title-container {
+    padding: 0;
+
+    width: 170px;
+    overflow-x: auto;
+    white-space: nowrap;
+    scrollbar-width: none;
+}
+
+.recording-title {
+    font-size: 20px;
+    font-weight: bold;
+
+    color: black;
+}
+
+.recording-info {
+    display: inline-block;
+    border-radius: 5px;
+
+    padding-top: 3px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+
+    margin-left: 20px;
+
+    background-color: #f5a6f7;
+
+    font-size: 13px;
+    font-weight: bold;
+
+    margin: 0;
+    color: #c61bf5;
+}
+
+.date {
+    margin-right: 8px;
+    margin-top: 10px;
+
+    font-size: 12px;
+    font-weight: normal;
+
+    color: gray;
+}

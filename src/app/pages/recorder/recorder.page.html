@@ -1,0 +1,94 @@
+<div class="container expand">
+  <div *ngIf="IsLoading(); else loaded" class="flex-display">
+    <span class="spinner-grow spinner-grow-lg text-primary" role="status" aria-hidden="true"></span>
+  </div>
+  <ng-template #loaded>
+    <div class="container-header ion-text-center">
+      <img src="assets/images/scribie.png" alt="logo" class="logo"> 
+    </div>
+    <div class="container-body">
+      <div class="flex-non-center">
+        <ion-grid>
+          <ion-row>
+            <ion-col>
+              <ion-grid>
+                <ion-row class="flex-display ion-margin-bottom">
+                  <ion-col class="fixedcol">
+                    <div class="progress-vertical rounded">
+                      <div #bar class="bg-primary rounded-bottom" role="progressbar" style="height: 45%;"></div>
+                    </div>
+                  </ion-col>
+                  <ion-col class="fixedcol">
+                    <div class="progress-vertical rounded">
+                      <div #bar class="bg-primary rounded-bottom" role="progressbar" style="height: 45%;"></div>
+                    </div>
+                  </ion-col>
+                  <ion-col class="fixedcol">
+                    <div class="progress-vertical rounded">
+                      <div #bar class="bg-primary rounded-bottom" role="progressbar" style="height: 45%;"></div>
+                    </div>
+                  </ion-col>
+                  <ion-col class="fixedcol">
+                    <div class="progress-vertical rounded">
+                      <div #bar class="bg-primary rounded-bottom" role="progressbar" style="height: 45%;"></div>
+                    </div>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col class="ion-text-center ion-margin-bottom">
+                    <ion-text color="dark" class="stopwatch">
+                      {{Duration()}}
+                    </ion-text>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-col>
+          </ion-row>
+          <ion-row class="flexi">
+            <div #content>
+              <ion-grid>
+                <div *ngIf="Status() == 'STORED'; else notStored">  
+                  <ion-row class="ion-text-center">
+                    <ion-col class="ion-margin-end">
+                      <ion-button class="action-button" fill="clear" color="success" (click)="confirm()">
+                        <div class="button-div">
+                          <ion-icon name="checkmark-circle"></ion-icon>
+                          <label>Save</label>
+                        </div>
+                      </ion-button>
+                    </ion-col>
+                    <ion-col class="ion-margin-start">
+                      <ion-button class="action-button" fill="clear" color="danger" (click)="discard()">
+                        <div class="button-div">
+                          <ion-icon name="trash"></ion-icon>
+                          <label>Discard</label>
+                        </div>
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>  
+                </div>
+                <ng-template #notStored>
+                  <ion-row class="ion-text-center ion-margin-top ion-margin-bottom">
+                    <ion-col class="ion-margin-bottom">
+                      <div #record>
+                        <ion-button shape="circle" color="danger" (click)="toggleRecorder()"></ion-button>
+                      </div>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row class="ion-text-center ion-margin-top">
+                    <ion-col>
+                      <ion-button class="return-button" fill="solid" (click)="returnToRecordings()" [disabled]="Status() == 'RECORDING'">
+                        <ion-icon slot="start" name="list-outline"></ion-icon>
+                        Recordings
+                      </ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ng-template>
+              </ion-grid>
+            </div>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+  </ng-template>
+</div>

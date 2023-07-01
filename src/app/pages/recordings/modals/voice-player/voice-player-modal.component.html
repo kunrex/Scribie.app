@@ -1,0 +1,109 @@
+<div class="container">
+  <div class="container-header ion-text-center">
+    <img src="assets/images/scribie.png" alt="logo" class="logo">
+  </div>
+  <div class="container-body">
+    <div class="absolute-center ion-padding expand">
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-text-end expand">
+            <ion-button (click)="confirm()" fill="clear" class="close-button ion-no-padding ion-no-margin">
+              Close&nbsp;
+              <ion-icon name="close-circle-outline"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col class="ion-no-padding ion-no-margin">
+            <ion-card class="ion-no-margin">
+              <div class="audio">
+                <div class="audio-container">
+                  <div id="waveform"></div>
+                </div>
+              </div>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="title-container">
+              <h2 class="card-title">{{fileName}}</h2>
+              <div class="recording-info">
+                <ion-text class="file-text">00:00:04&nbsp;&nbsp;0.02Mb&nbsp;&nbsp;.wav</ion-text>
+              </div>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="slider-container">
+              <input type="range" #timeline min="0" max="100" value="0">
+              <ion-grid class="expand">
+                <ion-row>
+                  <ion-col class="ion-text-start ion-no-padding">
+                    0:00
+                  </ion-col>
+                  <ion-col class="ion-text-end ion-no-padding">
+                    {{GetDuration()}}
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="flex-display expand">
+              <ion-grid>
+                <ion-row justify-content-center>
+                  <ion-col>
+                    <ion-button size="large" color="medium" fill="clear" (click)="forward(10)">
+                      <ion-icon class="playback-button" name="play-back"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button size="large" color="medium" fill="clear" (click)="playPause()">
+                      <ion-icon class="playback-button" name="pause"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                  <ion-col>
+                    <ion-button size="large" color="medium" fill="clear" (click)="forward(-10)">
+                      <ion-icon class="playback-button" name="play-forward"></ion-icon>
+                    </ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <div class="slider-container">
+            <ion-grid class="expand">
+              <ion-row justify-content-center class="ion-align-items-center">
+                <ion-col size="1" class="ion-text-start ion-no-padding flex-display">
+                  <ion-icon class="volume-icon" color="medium" name="volume-mute"></ion-icon>
+                </ion-col>
+                <ion-col class="flex-display ion-margin">
+                  <input type="range" #volume min="0" max="100" value="0">
+                </ion-col>
+                <ion-col size="1" class="ion-text-end ion-no-padding flex-display">
+                  <ion-icon class="volume-icon" color="medium" name="volume-high"></ion-icon>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+        </ion-row>
+        <ion-row justify-content-center>
+          <ion-col class="expand flex-display">
+            <ion-button color="primary" (click)="transcribe()">
+              Transcribe Recording
+              <ion-icon name="document-text"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>   
+</div>
+
+  

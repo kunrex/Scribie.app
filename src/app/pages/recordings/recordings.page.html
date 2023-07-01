@@ -1,0 +1,102 @@
+<div class="container">
+  <div *ngIf="IsLoading(); else loaded" class="flex-display">
+    <span class="spinner-grow spinner-grow-lg text-primary" role="status" aria-hidden="true"></span>
+  </div>
+  <ng-template #loaded>
+    <div class="container-header ion-text-center">
+      <img src="assets/images/scribie.png" alt="logo" class="logo">
+      
+      <div class="search-container">
+        <div class="input-group input-group-merge">
+          <div class="input-group-prepend">
+            <span class="search-icon">
+              <fa-icon [icon]="['fas', 'search']" class="fa-lg"></fa-icon>
+            </span>
+          </div>
+          <input #search type="text" class="form-control" placeholder="Search">
+        </div>
+      </div>
+    </div>
+  
+    <div class="container-body">
+      <div class="card shadow-lg">
+        <div class="card-body">
+          <div *ngIf="displayFiles.length > 0; else elseBlock">
+            <ul class="scroll">
+              <li *ngFor="let recording of displayFiles">
+                <div class="recording-item">
+                  <div class="row no-gutters">
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col size="3" class="flex-display">
+                          <ion-button size="large" color="primary" fill="clear" (click)="openPlayer(recording.Name())">
+                            <ion-icon class="recording-icon" name="play-circle" ></ion-icon>
+                          </ion-button>
+                        </ion-col>
+                        <ion-col class="ion-text-start">
+                          <ion-grid>
+                            <ion-row>
+                              <div class="recording-title-container">
+                                <ion-text recording #title id="{{recording.Name()}}" class="recording-title">{{recording.Name()}}</ion-text>
+                              </div>
+                            </ion-row>
+                            <ion-row>
+                              <div class="recording-info">
+                                <ion-text class="file-text">{{recording.Duration()}}&nbsp;&nbsp;{{recording.Size()}}&nbsp;&nbsp;{{recording.Extension()}}</ion-text>
+                              </div>
+                            </ion-row>
+                          </ion-grid>
+                        </ion-col>
+                        <ion-col size="2.5" class="ion-no-padding">
+                          <div class="ion-text-end">
+                            <ion-text class="date">{{recording.Date()}}</ion-text>
+                            <ion-button (click)="more(recording.Name())" size="medium" color="dark" fill="clear" class="ion-no-padding">
+                              <ion-icon name="ellipsis-vertical"></ion-icon>
+                            </ion-button>
+                          </div>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <ion-fab  vertical="bottom" horizontal="end">
+              <ion-fab-button (click)="recordNew()">
+                <ion-icon name="add"></ion-icon>
+              </ion-fab-button>
+            </ion-fab>
+          </div>
+          <ng-template #elseBlock>
+            <div class="flex-display">
+              <div class="text-center absolute-center expand">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col class="ion-no-padding">
+                     <ion-text color="dark">
+                        <h1>No Recordings</h1>
+                      </ion-text>
+                    </ion-col>
+                  </ion-row>
+                  <ion-row>
+                    <ion-col class="fab-btn-container ion-no-padding">
+                      <ion-fab>
+                        <ion-row class="ion-text-center">
+                          <ion-col>
+                            <ion-fab-button (click)="recordNew()">
+                              <ion-icon name="add"></ion-icon>
+                            </ion-fab-button>
+                          </ion-col>
+                        </ion-row>
+                      </ion-fab>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </div>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
