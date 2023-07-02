@@ -1,3 +1,4 @@
+import { Browser } from '@capacitor/browser';
 import { ModalController } from "@ionic/angular";
 import { Component, Injectable } from "@angular/core";
 
@@ -26,6 +27,10 @@ export class TranscribeHandler extends ModalHandler {
 export class Transcribe extends Modal {
   constructor(ctrl: ModalController) {
     super(ctrl);
+  }
+
+  async scribie() {
+    await Browser.open({ url: 'https://scribie.com/' });
   }
 
   async cancel(): Promise<boolean> {

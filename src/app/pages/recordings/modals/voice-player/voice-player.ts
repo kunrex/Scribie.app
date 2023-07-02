@@ -1,5 +1,5 @@
 import { ModalController } from '@ionic/angular';
-import { AfterViewInit, Component, ElementRef, Injectable, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Injectable, Input, OnInit, ViewChild } from '@angular/core';
 
 import { ActionEnum } from 'src/app/enums/action-enum';
 
@@ -11,6 +11,7 @@ import { ModalHandler } from 'src/app/widgets/modals/modal-handler';
 import { RecordingService } from 'src/app/services/recordings/recording-service';
 
 import WaveSurfer from 'wavesurfer.js';
+import { Recording } from 'src/app/services/recordings/recording';
 
 @Injectable()
 export class PlayerHandler extends ModalHandler {
@@ -32,28 +33,33 @@ export class PlayerHandler extends ModalHandler {
 })
 export class Player extends Modal implements OnInit, AfterViewInit {
   @Input() fileName!: string;
+  private recording: Recording | undefined;
+
   private isInitialised: boolean = false;
 
   private waveSurfer!: WaveSurfer;
-  
+
   private isPlaying: boolean = false;
-  IsPlaying() {
+  IsPlaying() : boolean {
     return this.isPlaying;
   }
 
   private isFinished: boolean = false;
+  private recordingLength: number = 0;
 
   private volumeSlider!: Slider;
   private timelineSlider!: Slider;
 
+  private readonly changeDetector: ChangeDetectorRef;
   private readonly recordingService: RecordingService;
 
   @ViewChild('volume', { static: false }) volumeRange!: ElementRef;
   @ViewChild('timeline', { static: false }) timelineRange!: ElementRef;
 
-  constructor(ctrl: ModalController, recordingService: RecordingService) {
+  constructor(ctrl: ModalController, changeDetector: ChangeDetectorRef, recordingService: RecordingService) {
     super(ctrl);
 
+    this.changeDetector = changeDetector;
     this.recordingService = recordingService;
   }
 
@@ -75,13 +81,15 @@ export class Player extends Modal implements OnInit, AfterViewInit {
       cursorWidth: 0,
     });
 
-    var data = this.recordingService.getRecording(this.fileName);
-    if(data == undefined) {
+    this.recording = this.recordingService.getRecording(this.fileName);
+    if(this.recording == undefined) {
       this.dismiss(ActionEnum.cancel, ActionEnum.cancel);
       return;
     }
 
-    var raw = window.atob(data.Base64());
+    //this.recordingLength = number.pathis.recording.Duration()
+
+    var raw = window.atob(this.recording.Base64());
     var length = raw.length;
 
     var arr = new Uint8Array(new ArrayBuffer(length));
@@ -108,8 +116,10 @@ export class Player extends Modal implements OnInit, AfterViewInit {
     });
 
     this.waveSurfer.on('finish', () => {
-      this.isPlaying = false;
       this.isFinished = true;
+      this.isPlaying = false;
+
+      this.changeDetector.detectChanges();
     });
 
     this.volumeSlider = new Slider(this.volumeRange.nativeElement as HTMLInputElement);
@@ -153,7 +163,6 @@ export class Player extends Modal implements OnInit, AfterViewInit {
   private async play() : Promise<void> {
     if(this.isFinished) {
       this.isFinished = false;
-      this.seek('0');
     }
 
     this.waveSurfer.play();
@@ -168,11 +177,13 @@ export class Player extends Modal implements OnInit, AfterViewInit {
       return;
     }
 
-    if(seconds > 0) {
-      await this.waveSurfer.skipForward(seconds);
-    }
-    else {
-      await this.waveSurfer.skipBackward(-seconds);
+    if(this.isPlaying) {
+      if(seconds > 0) {
+        await this.waveSurfer.skipForward(seconds);
+      }
+      else {
+        await this.waveSurfer.skipBackward(seconds);
+      }
     }
   }
 

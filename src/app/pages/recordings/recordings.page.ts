@@ -198,6 +198,7 @@ export class RecordingsPage extends LoadablePage<RecordingsAnimationController, 
   }
 
   async recordNew() : Promise<void> {
+    this.soundService.playSound(SoundEnum.click);
     await this.appFlowService.openRecorder();
   }
 
