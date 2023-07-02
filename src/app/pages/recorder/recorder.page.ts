@@ -51,12 +51,7 @@ export class RecorderPage extends LoadablePage<RecorderAnimationController, Reco
     }
   }
 
-  @ViewChildren('bar', { read: ElementRef }) set setProgressBars(elements: QueryList<ElementRef>) {
-    if(elements) {
-      //assign progress bar animation
-    }
-  }
-
+  @ViewChildren('bar', { read: ElementRef }) progressBars!: QueryList<ElementRef>;
   Duration() : string {
     return this.stopwatch.Duration();
   }
@@ -80,7 +75,25 @@ export class RecorderPage extends LoadablePage<RecorderAnimationController, Reco
     this.completeLoading();
   }
 
-  protected onCompleteLoad(): void { }
+  protected onCompleteLoad(): void { 
+    const el: Element[] = [];
+
+    for(var i: number = 0;i < this.progressBars.length; i++) {
+      var current = this.progressBars.get(i);
+
+      if(current != undefined) {
+        el.push(current.nativeElement);
+      }
+    }
+
+    var l: number = el.length;
+    while (l) {
+      const i = Math.floor(Math.random() * l--);
+      [el[l], el[i]] = [el[i], el[l]];
+    }
+
+    this.animationController.assignProgressBars(el);      
+  }
 
   async presentPermissionAlert() : Promise<void> {
     const role = await this.widgetController.getPermissionResult();
@@ -132,11 +145,12 @@ export class RecorderPage extends LoadablePage<RecorderAnimationController, Reco
 
     this.stopwatch.startStopwatch();
     await this.soundService.playSound(SoundEnum.startRecording);
+
+    await this.animationController.toggleProgressBars(true);
     if(this.button != undefined) {
       await this.animationController.toggleButtonAnimation(this.button.nativeElement, true);
     }
 
-    this.animationController.toggleProgressBars();
     await VoiceRecorder.startRecording();
   }
 
@@ -158,14 +172,19 @@ export class RecorderPage extends LoadablePage<RecorderAnimationController, Reco
         });
   
         this.audioDuration = this.Duration();
+        this.soundService.playSound(SoundEnum.stopRecording);
+
         await this.updateStatus();
+        await this.animationController.toggleProgressBars(false);
       }
       else {
         await this.resetState();
+        await this.animationController.toggleProgressBars(false);
       }
     }
     catch {
       await this.resetState();
+      await this.animationController.toggleProgressBars(false);
     }
   }
 
@@ -208,7 +227,6 @@ export class RecorderPage extends LoadablePage<RecorderAnimationController, Reco
   }
 
   private async updateStatus() : Promise<void> {
-    this.soundService.playSound(SoundEnum.stopRecording);
     await this.animationController.toggleFadeAnimation(true);
     
     switch (this.status) {

@@ -63,7 +63,8 @@
                   </ion-col>
                   <ion-col>
                     <ion-button size="large" color="medium" fill="clear" (click)="playPause()">
-                      <ion-icon class="playback-button" name="pause"></ion-icon>
+                      <ion-icon class="playback-button" name="play" *ngIf="!IsPlaying()"></ion-icon>
+                      <ion-icon class="playback-button" name="pause" *ngIf="IsPlaying()"></ion-icon>
                     </ion-button>
                   </ion-col>
                   <ion-col>

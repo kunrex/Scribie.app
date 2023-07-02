@@ -206,10 +206,15 @@ export class RecordingsPage extends LoadablePage<RecordingsAnimationController, 
     var result = await this.playerHandler.create(recording);
 
     if(result != undefined) {
-      if(result.Data() == ActionEnum.transcibe) {
-        setTimeout(() => { 
-          this.openTranscribe();
-        }, 500);
+      switch (result.Data()) {
+        case ActionEnum.cancel:
+          this.presentErrorAlert();
+          break;
+        case ActionEnum.transcibe:
+          setTimeout(() => { 
+            this.openTranscribe();
+          }, 500);
+          break;
       }
     }
   }

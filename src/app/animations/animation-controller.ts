@@ -53,7 +53,7 @@ export abstract class CustomAnimationController extends Initilaisiable implement
   }
 
   protected pushPreloadedAnimation(name: string, animation: Animation) {
-    if(this.getAssignableAnimation(name) != undefined || this.IsInitialised()) {
+    if(this.getAssignableAnimation(name) != undefined) {
       return;
     }
 
@@ -61,7 +61,7 @@ export abstract class CustomAnimationController extends Initilaisiable implement
   }
 
   protected pushDynamicAnimation(name: string, animation: DynamicAnimation) {
-    if(this.getDynamicAnimation(name) != undefined || this.IsInitialised()) {
+    if(this.getDynamicAnimation(name) != undefined) {
       return;
     }
 

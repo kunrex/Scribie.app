@@ -35,7 +35,12 @@ export class Player extends Modal implements OnInit, AfterViewInit {
   private isInitialised: boolean = false;
 
   private waveSurfer!: WaveSurfer;
+  
   private isPlaying: boolean = false;
+  IsPlaying() {
+    return this.isPlaying;
+  }
+
   private isFinished: boolean = false;
 
   private volumeSlider!: Slider;
@@ -72,6 +77,7 @@ export class Player extends Modal implements OnInit, AfterViewInit {
 
     var data = this.recordingService.getRecording(this.fileName);
     if(data == undefined) {
+      this.dismiss(ActionEnum.cancel, ActionEnum.cancel);
       return;
     }
 
@@ -96,20 +102,18 @@ export class Player extends Modal implements OnInit, AfterViewInit {
       await this.seek(value);
     });
 
-    this.waveSurfer.on('ready', () => {
+    this.waveSurfer.on('audioprocess', () => {
       const duration = this.waveSurfer.getDuration();
-  
-      this.waveSurfer.on('audioprocess', () => {
-        this.timelineSlider.updateValue(this.waveSurfer.getCurrentTime() / duration).toString();
-      });
+      this.timelineSlider.updateValue(this.waveSurfer.getCurrentTime() / duration).toString();
+    });
 
-      this.waveSurfer.on('finish', () => {
-        this.isFinished = true;
-      });
+    this.waveSurfer.on('finish', () => {
+      this.isPlaying = false;
+      this.isFinished = true;
     });
 
     this.volumeSlider = new Slider(this.volumeRange.nativeElement as HTMLInputElement);
-    this,this.volumeSlider.withInput(async (value) => {
+    this.volumeSlider.withInput(async (value) => {
       await this.volumeControl(value);
     });
       
@@ -138,12 +142,12 @@ export class Player extends Modal implements OnInit, AfterViewInit {
 
     if(this.isPlaying) {
       this.pause();
+      this.isPlaying = false;
     }
     else {
       this.play();
+      this.isPlaying = true;
     }
-
-    this.isPlaying = !this.isPlaying;
   }
 
   private async play() : Promise<void> {

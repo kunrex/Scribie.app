@@ -3,12 +3,12 @@ import { UtilityComponent } from "../utility-component";
 export class Slider extends UtilityComponent<Slider> {	
   private readonly max: number = 0;	
   Max() : number {
-	  return this.max;
-	}
+	return this.max;
+  }
 
-	private readonly min: number = 0;
-	Min() : number {
-		return this.min;
+  private readonly min: number = 0;
+  Min() : number {
+	return this.min;
   }
 
   private readonly diff: number = 0;
