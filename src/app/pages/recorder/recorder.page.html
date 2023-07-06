@@ -1,18 +1,18 @@
-<div class="container expand">
-  <div *ngIf="IsLoading(); else loaded" class="flex-display">
+<div class="column-display-stretch expand">
+  <div *ngIf="IsLoading(); else loaded" class="flex-display-stretch">
     <span class="spinner-grow spinner-grow-lg text-primary" role="status" aria-hidden="true"></span>
   </div>
   <ng-template #loaded>
-    <div class="container-header ion-text-center">
-      <img src="assets/images/scribie.png" alt="logo" class="logo"> 
+    <div class="container-header ion-text-center flex-non-center">
+      <img src="assets/images/scribie.png" alt="logo" class="main-logo"> 
     </div>
-    <div class="container-body">
-      <div class="flex-non-center">
+    <div class="container-body scroll-check">
+      <div class="flex-justify-center content-padding">
         <ion-grid>
           <ion-row>
             <ion-col>
               <ion-grid>
-                <ion-row class="flex-display ion-margin-bottom">
+                <ion-row class="flex-display-stretch ion-margin-bottom">
                   <ion-col class="fixedcol">
                     <div class="progress-vertical rounded">
                       <div #bar class="bg-primary rounded-bottom rounded-top" role="progressbar" style="height: 100%;"></div>
@@ -44,7 +44,7 @@
               </ion-grid>
             </ion-col>
           </ion-row>
-          <ion-row class="flexi">
+          <ion-row class="flex-justify-center">
             <div #content>
               <ion-grid>
                 <div *ngIf="Status() == 'STORED'; else notStored">  

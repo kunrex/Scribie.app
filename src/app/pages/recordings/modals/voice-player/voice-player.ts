@@ -1,4 +1,4 @@
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, Injectable, Input, OnInit, ViewChild } from '@angular/core';
 
 import { ActionEnum } from 'src/app/enums/action-enum';
@@ -18,6 +18,7 @@ export class PlayerHandler extends ModalHandler {
   async create(fileName: string) : Promise<ModalResult | null> {
     const modal = await this.modalController.create({
       component: Player,
+      cssClass: 'player-modal',
       componentProps: {
         'fileName': fileName,
       } 
@@ -50,27 +51,31 @@ export class Player extends Modal implements OnInit, AfterViewInit {
   private volumeSlider!: Slider;
   private timelineSlider!: Slider;
 
+  private readonly platform: Platform;
   private readonly changeDetector: ChangeDetectorRef;
   private readonly recordingService: RecordingService;
 
   @ViewChild('volume', { static: false }) volumeRange!: ElementRef;
   @ViewChild('timeline', { static: false }) timelineRange!: ElementRef;
 
-  constructor(ctrl: ModalController, changeDetector: ChangeDetectorRef, recordingService: RecordingService) {
+  constructor(ctrl: ModalController, platform: Platform, changeDetector: ChangeDetectorRef, recordingService: RecordingService) {
     super(ctrl);
 
+    this.platform = platform;
     this.changeDetector = changeDetector;
     this.recordingService = recordingService;
   }
 
   async ngOnInit(): Promise<void> {
+    const height = this.platform.height();
+
     this.waveSurfer = WaveSurfer.create({
       container: "#waveform",
 
       waveColor: 'black',
       progressColor: '#65737e',
 
-      height: 180,
+      height: height > 1100 ? 280 : 180,
       minPxPerSec: 75,
       scrollParent: true,
       hideScrollbar: true,
@@ -86,8 +91,6 @@ export class Player extends Modal implements OnInit, AfterViewInit {
       this.dismiss(ActionEnum.cancel, ActionEnum.cancel);
       return;
     }
-
-    //this.recordingLength = number.pathis.recording.Duration()
 
     var raw = window.atob(this.recording.Base64());
     var length = raw.length;

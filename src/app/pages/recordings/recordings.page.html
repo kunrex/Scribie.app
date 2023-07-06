@@ -1,26 +1,26 @@
-<div class="container">
-  <div *ngIf="IsLoading(); else loaded" class="flex-display">
+<div class="column-display-stretch">
+  <div *ngIf="IsLoading(); else loaded" class="flex-display-stretch">
     <span class="spinner-grow spinner-grow-lg text-primary" role="status" aria-hidden="true"></span>
   </div>
   <ng-template #loaded>
     <div class="container-header ion-text-center">
-      <img src="assets/images/scribie.png" alt="logo" class="logo">
+      <img src="assets/images/scribie.png" alt="logo" class="main-logo">
       
-      <div class="search-container">
+      <div class="ion-padding">
         <div class="input-group input-group-merge">
           <div class="input-group-prepend">
             <span class="search-icon">
               <fa-icon [icon]="['fas', 'search']" class="fa-lg"></fa-icon>
             </span>
           </div>
-          <input #search type="text" class="form-control" placeholder="Search">
+          <input #search type="text" class="form-control search" placeholder="Search">
         </div>
       </div>
     </div>
   
     <div class="container-body">
-      <div class="card shadow-lg">
-        <div class="card-body">
+      <div class="card expand-vertical shadow-lg">
+        <div class="ion-no-padding ion-padding-top">
           <div *ngIf="displayFiles.length > 0; else elseBlock">
             <ul class="scroll">
               <li *ngFor="let recording of displayFiles">
@@ -28,7 +28,7 @@
                   <div class="row no-gutters">
                     <ion-grid>
                       <ion-row>
-                        <ion-col size="3" class="flex-display">
+                        <ion-col size="3" class="flex-display-stretch">
                           <ion-button size="large" color="primary" fill="clear" (click)="openPlayer(recording.Name())">
                             <ion-icon class="recording-icon" name="play-circle" ></ion-icon>
                           </ion-button>
@@ -47,9 +47,9 @@
                             </ion-row>
                           </ion-grid>
                         </ion-col>
-                        <ion-col size="2.5" class="ion-no-padding">
+                        <ion-col class="ion-no-padding">
                           <div class="ion-text-end">
-                            <ion-text class="date">{{recording.Date()}}</ion-text>
+                            <ion-text class="date">{{recording.Date()}} <br></ion-text>
                             <ion-button (click)="more(recording.Name())" size="medium" color="dark" fill="clear" class="ion-no-padding">
                               <ion-icon name="ellipsis-vertical"></ion-icon>
                             </ion-button>
@@ -68,12 +68,12 @@
             </ion-fab>
           </div>
           <ng-template #elseBlock>
-            <div class="flex-display">
+            <div class="flex-display-stretch">
               <div class="text-center absolute-center expand">
                 <ion-grid>
                   <ion-row>
                     <ion-col class="ion-no-padding">
-                     <ion-text color="dark">
+                     <ion-text color="dark" class="a">
                         <h1>No Recordings</h1>
                       </ion-text>
                     </ion-col>

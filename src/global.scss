@@ -37,3 +37,62 @@
   }
 }
 
+.player-modal {
+  &::part(content) {
+    width: 100%;
+    height: 100%;
+
+    margin: none;
+    padding: none;
+  }
+}
+
+.expand {
+  width: 100%;
+}
+
+.main-logo {
+  width: 30vw;
+  height: auto;
+
+  max-width: 200px;
+}
+
+.absolute-center {
+  position: fixed;
+
+  top: 50%;
+  left: 50%;
+  
+  transform: translate(-50%, -50%);
+}
+
+.flex-display-stretch {
+  height:100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.column-display-stretch {
+  padding: 0;
+
+  height: 100%;
+
+  display: flex;
+  flex-flow: column;
+}
+
+.column-display-stretch .container-header {
+  flex: 0 1 auto;
+
+  margin-top: 40px;
+}
+
+.column-display-stretch .container-body {  
+  flex: 1 1 auto;
+  
+  margin: 10px;
+  margin-top: 0px;
+}

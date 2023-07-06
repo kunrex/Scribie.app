@@ -1,17 +1,13 @@
-.splashscreen-page {
-    display:flex;
-    justify-content: center;
-    align-items: center;
-
-    height:100%;
-}
-
 .logo {
     height: 12vh;
-    width: auto;
+    min-height: 100px;
 }
 
-.name {
+.title {
     height: 7vh;
+    min-height: 58px;
+}
+
+.logo, title {
     width: auto;
 }

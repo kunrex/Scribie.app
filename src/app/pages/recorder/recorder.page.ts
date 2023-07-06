@@ -1,3 +1,4 @@
+import { Platform } from '@ionic/angular';
 import { VoiceRecorder, RecordingData, GenericResponse } from 'capacitor-voice-recorder';
 import { Component, ElementRef, QueryList, ViewChild, ViewChildren } from '@angular/core';
 
@@ -146,9 +147,9 @@ export class RecorderPage extends LoadablePage<RecorderAnimationController, Reco
     this.stopwatch.startStopwatch();
     await this.soundService.playSound(SoundEnum.startRecording);
 
-    await this.animationController.toggleProgressBars(true);
+    await this.toggleProgressBarAnimation(true);
     if(this.button != undefined) {
-      await this.animationController.toggleButtonAnimation(this.button.nativeElement, true);
+      await this.toggleButtonAnimation(true);
     }
 
     await VoiceRecorder.startRecording();
@@ -175,16 +176,16 @@ export class RecorderPage extends LoadablePage<RecorderAnimationController, Reco
         this.soundService.playSound(SoundEnum.stopRecording);
 
         await this.updateStatus();
-        await this.animationController.toggleProgressBars(false);
+        await this.toggleProgressBarAnimation(false);
       }
       else {
         await this.resetState();
-        await this.animationController.toggleProgressBars(false);
+        await this.toggleProgressBarAnimation(false);
       }
     }
     catch {
       await this.resetState();
-      await this.animationController.toggleProgressBars(false);
+      await this.toggleProgressBarAnimation(false);
     }
   }
 
@@ -192,11 +193,21 @@ export class RecorderPage extends LoadablePage<RecorderAnimationController, Reco
     this.resetRecordingData();
 
     this.soundService.playSound(SoundEnum.stopRecording);
-    if(this.button != undefined) {
-      await this.animationController.toggleButtonAnimation(this.button.nativeElement, false);
-    }
+   
 
     this.widgetController.presentRecordingToast();
+  }
+
+  private async toggleButtonAnimation(forward: boolean) {
+    if(this.button != undefined) {
+      await this.animationController.toggleButtonAnimation(this.button.nativeElement, forward);
+    }
+  }
+
+  private async toggleProgressBarAnimation(play: boolean) {
+    if(this.progressBars != undefined) {
+      await this.animationController.toggleProgressBars(play);
+    }
   }
 
   async discard() : Promise<void> {
