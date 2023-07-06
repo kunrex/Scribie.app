@@ -25,7 +25,7 @@ All these features are complimented by appropriate **animations**, **responsive 
 ## Technologies and Assets
 
 * **Angular 15**
-* **Ionic 6** and **Capacior 5**
+* **Ionic 6** and **Capacitor 5**
 * <a href="https://www.npmjs.com/package/capacitor-voice-recorder" target="_blank">Capacitor Voice Recording</a>
 * <a href="https://wavesurfer-js.org/" target="_blank">Wavesurfer</a>
 * <a href="https://www.npmjs.com/package/@capacitor/browser" target="_blank">Capacitor Browser</a>
